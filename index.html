@@ -66,9 +66,24 @@ debuild -b -uc -us
 We create a very basic Debian repo, not using a pool/ directory and Release files with GPG signatures.
 
 <pre>
-dpkg-scanpackages . /dev/null | gzip -9 > Packages.gz
-dpkg-scansources . | gzip -9 > Sources.gz
+ARCH="`dpkg --print-architecture`"
+
+mkdir -p dists/main/local/binary-$ARCH
+mkdir -p dists/main/local/source
 </pre>
+
+Move binary packages to <code>binary-$ARCH</code> and sources to <code>source</code>.
+
+<pre>
+dpkg-scanpackages dists/main/local/binary-$ARCH /dev/null \
+  | gzip -9 \
+  > dists/main/local/binary-$ARCH/Packages.gz
+
+dpkg-scansources dists/main/local/source \
+  | gzip -9 \
+  > dists/main/local/source/Sources.gz
+</pre>
+
 
         <hr>
         <span>
