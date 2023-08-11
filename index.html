@@ -1,0 +1,58 @@
+<html>
+<head>
+    <title>Index of /</title>
+    <style>
+        * {
+        font-family: sans-serif;
+        }
+    </style>
+</head>
+    <body>
+        <h1>Index of /</h1>
+        <hr>
+
+Sample repositories for DEB and RPM packages.
+
+<hr>
+
+<h2>RPM package build and repo index</h2>
+
+<h3>Build package</h3>
+<pre>
+rpm -i $pgk.srpm
+rpmbuild -ba --clean SPECS/$pkg.spec
+</pre>
+
+We skip the step of signing the package for now.
+
+<h3>Create repo</h3>
+<pre>
+createrepo .
+</pre>
+
+<hr>
+
+<h2>DEB package build and repo</h2>
+
+<h3>Build package</h3>
+<pre>
+dpkg-source -x $pkg.dsc
+cd $pkg
+mk-build-deps --install debian/control
+debuild -b -uc -us
+</pre>
+
+<h3>Create repo</h3>
+We create a very basic Debian repo, not using a pool/ directory and Release files with GPG signatures.
+
+<pre>
+dpkg-scanpackages . /dev/null | gzip -9 > Packages.gz
+dpkg-scansources . | gzip -9 > Sources.gz
+</pre>
+
+        <hr>
+        <span>
+            <span style="font-size: 12px">Beat Rubischon &lt;beat@0x1b.ch&gt;</span>
+        </span>
+    </body>
+</html>
