@@ -1,19 +1,4 @@
-# RPM build and repo
-
-## Build package
-```
-rpm -i $pgk.srpm
-rpmbuild -ba --clean SPECS/$pkg.spec
-```
-
-We skip the step of signing the package for now.
-
-## Create repo
-```bash
-createrepo .
-```
-
-# DEB build and repo
+# DEB build and APT repo
 
 ## Build package
 ```bash
@@ -43,4 +28,19 @@ dpkg-scanpackages dists/main/local/binary-$ARCH /dev/null \
 dpkg-scansources dists/main/local/source \
   | gzip -9 \
   > dists/main/local/source/Sources.gz
+```
+
+# RPM build and YUM repo
+
+## Build package
+```
+rpm -i $pgk.srpm
+rpmbuild -ba --clean SPECS/$pkg.spec
+```
+
+We skip the step of signing the package for now.
+
+## Create repo
+```bash
+createrepo .
 ```
