@@ -46,8 +46,9 @@ debuild -b -uc -us
 </pre>
 
 <h3>Create repo</h3>
-We create a flat Debian repo, not using dist/ or pool/ directories and Release files with GPG signatures.
+We create a flat repository, not using dist/ or pool/ directories and Release files with GPG signatures.
 
+<pre>
 dpkg-scanpackages . /dev/null \
   | gzip -9 > Packages.gz
 
